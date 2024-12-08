@@ -11,7 +11,7 @@ export default function AboutPage() {
           <div className="grid gap-8 md:grid-cols-2 items-center">
             <div className="space-y-6">
               <h1 className="text-4xl md:text-5xl font-normal leading-tight">
-                A brand built on the love of craftmanship, quality and outstanding customer service
+                A brand built on the love of craftsmanship, quality and outstanding customer service&apos;s dedication
               </h1>
               <Button asChild className="bg-[#2A254B] hover:bg-[#2A254B]/90">
                 <Link href="/products">View our products</Link>
@@ -34,7 +34,7 @@ export default function AboutPage() {
         <div className="container px-4 md:px-6">
           <div className="grid md:grid-cols-2 gap-8">
             <div className="space-y-4">
-              <h2 className="text-2xl font-normal">It started with a small idea</h2>
+              <h2 className="text-2xl font-normal">It started with a small idea&apos;s evolution</h2>
               <p className="text-gray-300">
                 A global brand with local beginnings, our story began in a small studio in South London in early 2014
               </p>
@@ -67,7 +67,7 @@ export default function AboutPage() {
             </div>
             <div className="space-y-6">
               <h2 className="text-3xl font-normal">
-                Our service isn't just personal, it's actually hyper personally exquisite
+                Our service isn&apos;t just personal, it&apos;s actually hyper personally exquisite
               </h2>
               <div className="space-y-4">
                 <p className="text-gray-600">
@@ -93,7 +93,7 @@ export default function AboutPage() {
               },
               {
                 title: "Made by true artisans",
-                description: "Handmade crafted goods made with real passion and craftmanship"
+                description: "Handmade crafted goods made with real passion and craftsmanship"
               },
               {
                 title: "Unbeatable prices",
@@ -121,7 +121,7 @@ export default function AboutPage() {
           <div className="max-w-2xl mx-auto text-center space-y-4">
             <h2 className="text-3xl font-normal">Join the club and get the benefits</h2>
             <p className="text-gray-600">
-              Sign up for our newsletter and receive exclusive offers on new ranges, sales, pop up stores and more
+              Sign up for our newsletter and receive exclusive offers on new ranges, sales, pop-up stores, and more
             </p>
             <form className="max-w-md mx-auto flex gap-2">
               <Input type="email" placeholder="your@email.com" className="flex-1" />

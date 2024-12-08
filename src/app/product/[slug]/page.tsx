@@ -1,13 +1,50 @@
-import Image from "next/image"
-import Link from "next/link"
-import { MinusIcon, PlusIcon } from 'lucide-react'
+'use client'; // Add this directive at the top of the file
 
-import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
-import { SiteHeader } from "@/components/site-header"
-import { SiteFooter } from "@/components/site-footer"
+// Define the Product type
+interface Product {
+  name: string;
+  price: number;
+  description: string;
+  features: string[];
+  dimensions: {
+    height: string;
+    width: string;
+    depth: string;
+  };
+  imageUrl: string;
+}
+
+
+
+import { useEffect, useState } from "react";
+import Image from "next/image";
+import { useParams } from "next/navigation"; // Use useParams instead of useRouter
+import { MinusIcon, PlusIcon } from 'lucide-react';
+
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { SiteHeader } from "@/components/site-header";
+import { SiteFooter } from "@/components/site-footer";
 
 export default function ProductPage() {
+  const { slug } = useParams(); // Using useParams to get the slug
+
+  // State to store the fetched product data with the correct type
+  const [product, setProduct] = useState<Product | null>(null); // Explicitly type the state as Product | null
+
+  // Fetch product data based on slug when the component mounts
+  useEffect(() => {
+    if (slug) {
+      fetch(`/api/products/${slug}`) // API call to fetch product data by slug
+        .then((res) => res.json())
+        .then((data) => setProduct(data))
+        .catch((error) => console.error('Error fetching product data:', error));
+    }
+  }, [slug]);
+
+  // If product is not loaded yet, display loading state
+  if (!product) return <div>Loading...</div>;
+
   return (
     <div className="flex min-h-screen flex-col">
       <SiteHeader />
@@ -15,9 +52,10 @@ export default function ProductPage() {
         <div className="container py-6 md:py-12">
           <div className="grid gap-8 md:grid-cols-2">
             <div className="relative aspect-square">
+              {/* Dynamic product image */}
               <Image
-                src="/placeholder.svg"
-                alt="Product Image"
+                src={product.imageUrl} // URL from product data
+                alt={product.name}
                 fill
                 className="object-cover"
                 priority
@@ -25,40 +63,40 @@ export default function ProductPage() {
             </div>
             <div className="space-y-6">
               <div className="space-y-2">
-                <h1 className="text-3xl font-bold">The Dandy Chair</h1>
-                <p className="text-2xl font-bold">£250</p>
+                {/* Product name and price */}
+                <h1 className="text-3xl font-bold">{product.name}</h1>
+                <p className="text-2xl font-bold">£{product.price}</p>
               </div>
               <div className="space-y-4">
+                {/* Product description */}
                 <h2 className="font-medium">Description</h2>
-                <p className="text-muted-foreground">
-                  A timeless design, with premium materials features as one of our most popular and
-                  iconic pieces. The dandy chair is perfect for any stylish living space with beech
-                  legs and lambskin leather upholstery.
-                </p>
+                <p className="text-muted-foreground">{product.description}</p>
                 <ul className="list-inside list-disc space-y-2 text-muted-foreground">
-                  <li>Premium material</li>
-                  <li>Handmade upholstery</li>
-                  <li>Quality timeless classic</li>
+                  {product.features.map((feature, index) => (
+                    <li key={index}>{feature}</li>
+                  ))}
                 </ul>
               </div>
               <div className="space-y-4">
+                {/* Product dimensions */}
                 <h2 className="font-medium">Dimensions</h2>
                 <div className="grid grid-cols-3 gap-4 text-sm">
                   <div>
                     <p className="font-medium">Height</p>
-                    <p className="text-muted-foreground">110cm</p>
+                    <p className="text-muted-foreground">{product.dimensions.height}</p>
                   </div>
                   <div>
                     <p className="font-medium">Width</p>
-                    <p className="text-muted-foreground">75cm</p>
+                    <p className="text-muted-foreground">{product.dimensions.width}</p>
                   </div>
                   <div>
                     <p className="font-medium">Depth</p>
-                    <p className="text-muted-foreground">50cm</p>
+                    <p className="text-muted-foreground">{product.dimensions.depth}</p>
                   </div>
                 </div>
               </div>
               <div className="flex items-center gap-2">
+                {/* Quantity controls */}
                 <Button variant="outline" size="icon">
                   <MinusIcon className="h-4 w-4" />
                   <span className="sr-only">Decrease quantity</span>
@@ -82,6 +120,5 @@ export default function ProductPage() {
       </main>
       <SiteFooter />
     </div>
-  )
+  );
 }
-

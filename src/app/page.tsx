@@ -8,29 +8,33 @@ import { Input } from "@/components/ui/input"
 
 const Home = () => {
   const [email, setEmail] = useState('')  // State to manage email input
+  const [formSubmitted, setFormSubmitted] = useState(false) // To track form submission
+  const [emailError, setEmailError] = useState('') // To track email validation error
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault()
     // Basic form validation logic
     if (email) {
-      alert(`Newsletter subscription successful! ${email}`)
+      setFormSubmitted(true)  // Set formSubmitted to true when email is valid
+      setEmailError('') // Clear error if email is valid
+      setEmail('') // Reset email field after submission
     } else {
-      alert("Please enter a valid email.")
+      setEmailError("Please enter a valid email.") // Show error message if email is not valid
     }
   }
 
   return (
     <div className="flex flex-col min-h-screen">
       <section className="grid md:grid-cols-2">
-        <div className="bg-[#2A254B] text-white p-12 md:p-24 flex items-center">
+        <div className="bg-[#91A6A4] text-black p-12 md:p-24 flex items-center">
           <div className="max-w-xl">
             <h1 className="text-4xl md:text-5xl font-normal mb-6">
               The furniture brand for the future, with timeless designs
             </h1>
-            <p className="text-gray-300 mb-8">
+            <p className="text-gray-600 mb-8">
               A new era in eco-friendly furniture with Avion, the French luxury retail brand with nice fonts, tasteful colors and a beautiful way to display things digitally using modern web technologies.
             </p>
-            <Button variant="outline" className="text-white border-white hover:bg-white hover:text-[#2A254B]">
+            <Button variant="outline" className="text-black border-black hover:bg-black hover:text-white">
               View collection
             </Button>
           </div>
@@ -55,10 +59,10 @@ const Home = () => {
                 description: "Order before 3pm and get your order the next day as standard"
               }, {
                 title: "Made by true artisans",
-                description: "Handmade crafted goods made with passion and craftmanship"
+                description: "Handmade crafted goods made with passion and craftsmanship"
               }, {
                 title: "Unbeatable prices",
-                description: "For our materials and quality you won't find better prices anywhere"
+                description: "For our materials and quality you won&apos;t find better prices anywhere"
               }, {
                 title: "Recycled packaging",
                 description: "We use 100% recycled packaging to ensure our footprint is manageable"
@@ -66,7 +70,7 @@ const Home = () => {
             ].map((feature, index) => (
               <div key={index}>
                 <div className="w-10 h-10 mb-6">
-                  <svg viewBox="0 0 40 40" className="w-full h-full text-[#2A254B]">
+                  <svg viewBox="0 0 40 40" className="w-full h-full text-[#91A6A4]">
                     <rect width="40" height="40" fill="currentColor" />
                   </svg>
                 </div>
@@ -181,21 +185,29 @@ const Home = () => {
         <div className="container mx-auto px-4 text-center">
           <h2 className="text-2xl mb-4">Join the club and get the benefits</h2>
           <p className="text-gray-600 mb-8">
-            Sign up for our newsletter and receive exclusive offers on new ranges, sales, pop up stores, and more
+            Sign up for our newsletter and receive exclusive offers on new ranges, sales, pop-up stores, and more.
           </p>
           <form className="max-w-md mx-auto flex gap-4" onSubmit={handleSubmit}>
-            <input
+            <Input
               type="email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               placeholder="your@email.com"
-              className="flex-1 p-2 border border-gray-300 rounded-md"
               required
+              className="flex-1"
             />
-            <button type="submit" className="bg-[#2A254B] hover:bg-[#2A254B]/90 text-white py-2 px-4 rounded-md">
+            <Button type="submit" className="bg-[#91A6A4] hover:bg-[#91A6A4]/90 text-white py-2 px-4 rounded-md">
               Sign up
-            </button>
+            </Button>
           </form>
+          {formSubmitted && (
+            <p className="mt-4 text-gray-600">
+              You&apos;ve successfully signed up with <strong>{email}</strong>
+            </p>
+          )}
+          {emailError && (
+            <p className="mt-4 text-red-600">{emailError}</p>
+          )}
         </div>
       </section>
 
@@ -205,19 +217,17 @@ const Home = () => {
             <div className="space-y-6">
               <h2 className="text-2xl">From a studio in London to a global brand with over 400 outlets</h2>
               <p className="text-gray-600">
-                When we started Avion, the idea was simple. Make high quality furniture affordable and available for the mass market.
+                When we started Avion, our goal was to create the most comfortable, beautiful and functional furniture brand the world has ever seen. Since then, we’ve expanded globally and brought timeless designs to hundreds of cities.
               </p>
-              <p className="text-gray-600">
-                Handmade, and lovingly crafted furniture and homeware is what we live, breathe and design so our Chelsea boutique become the hotbed for the London interior design community.
-              </p>
-              <Button variant="outline">Get in touch</Button>
+              <Link href="/about-us" className="text-[#91A6A4] hover:underline">Read more</Link>
             </div>
-            <div className="relative aspect-[4/3]">
+            <div>
               <Image
-                src="/Get_in_touch.svg"
-                alt="Studio image"
-                fill
-                className="object-cover"
+                src="/images/our-story.jpg"
+                alt="Our story"
+                width={500}
+                height={300}
+                className="object-cover rounded-lg"
               />
             </div>
           </div>
