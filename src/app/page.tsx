@@ -1,9 +1,24 @@
+'use client'
+
+import { useState } from "react"
 import Image from "next/image"
 import Link from "next/link"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 
-export default function Home() {
+const Home = () => {
+  const [email, setEmail] = useState('')  // State to manage email input
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault()
+    // Basic form validation logic
+    if (email) {
+      alert(`Newsletter subscription successful! ${email}`)
+    } else {
+      alert("Please enter a valid email.")
+    }
+  }
+
   return (
     <div className="flex flex-col min-h-screen">
       <section className="grid md:grid-cols-2">
@@ -35,20 +50,16 @@ export default function Home() {
         <div className="container mx-auto px-4">
           <h2 className="text-2xl text-center mb-16">What makes our brand different</h2>
           <div className="grid md:grid-cols-4 gap-8">
-            {[
-              {
+            {[{
                 title: "Next day as standard",
                 description: "Order before 3pm and get your order the next day as standard"
-              },
-              {
+              }, {
                 title: "Made by true artisans",
                 description: "Handmade crafted goods made with passion and craftmanship"
-              },
-              {
+              }, {
                 title: "Unbeatable prices",
                 description: "For our materials and quality you won't find better prices anywhere"
-              },
-              {
+              }, {
                 title: "Recycled packaging",
                 description: "We use 100% recycled packaging to ensure our footprint is manageable"
               }
@@ -67,6 +78,7 @@ export default function Home() {
         </div>
       </section>
 
+      {/* New Ceramics Section with Different Images for Each Product */}
       <section className="py-16">
         <div className="container mx-auto px-4">
           <div className="flex justify-between items-center mb-8">
@@ -76,25 +88,54 @@ export default function Home() {
             </Link>
           </div>
           <div className="grid md:grid-cols-4 gap-6">
-            {[
-              { name: "The Dandy chair", price: "£250" },
-              { name: "Rustic Vase Set", price: "£155" },
-              { name: "The Silky Vase", price: "£125" },
-              { name: "The Lucy Lamp", price: "£399" }
-            ].map((product, index) => (
-              <div key={index}>
-                <div className="relative aspect-square mb-4">
-                  <Image
-                    src="/home.svg"
-                    alt={product.name}
-                    fill
-                    className="object-cover"
-                  />
-                </div>
-                <h3 className="text-lg mb-1">{product.name}</h3>
-                <p className="text-gray-600">{product.price}</p>
+            <div>
+              <div className="relative aspect-square mb-4">
+                <Image
+                  src="/home.svg" // Replace with your actual image path
+                  alt="The Dandy chair"
+                  fill
+                  className="object-cover"
+                />
               </div>
-            ))}
+              <h3 className="text-lg mb-1">The Dandy chair</h3>
+              <p className="text-gray-600">£250</p>
+            </div>
+            <div>
+              <div className="relative aspect-square mb-4">
+                <Image
+                  src="/images/rustic-vase-set.jpg" // Replace with your actual image path
+                  alt="Rustic Vase Set"
+                  fill
+                  className="object-cover"
+                />
+              </div>
+              <h3 className="text-lg mb-1">Rustic Vase Set</h3>
+              <p className="text-gray-600">£155</p>
+            </div>
+            <div>
+              <div className="relative aspect-square mb-4">
+                <Image
+                  src="/images/silky-vase.jpg" // Replace with your actual image path
+                  alt="The Silky Vase"
+                  fill
+                  className="object-cover"
+                />
+              </div>
+              <h3 className="text-lg mb-1">The Silky Vase</h3>
+              <p className="text-gray-600">£125</p>
+            </div>
+            <div>
+              <div className="relative aspect-square mb-4">
+                <Image
+                  src="/images/silky-vase-2.jpg" // Replace with your actual image path
+                  alt="The Silky Vase"
+                  fill
+                  className="object-cover"
+                />
+              </div>
+              <h3 className="text-lg mb-1">The Silky Vase</h3>
+              <p className="text-gray-600">£125</p>
+            </div>
           </div>
         </div>
       </section>
@@ -108,10 +149,16 @@ export default function Home() {
             </Link>
           </div>
           <div className="grid md:grid-cols-3 gap-6">
-            {[
-              { name: "The Poplar suede sofa", price: "£980" },
-              { name: "The Dandy chair", price: "£250" },
-              { name: "The Dandy chair", price: "£250" }
+            {[{
+                name: "The Poplar suede sofa",
+                price: "£980"
+              }, {
+                name: "The Dandy chair",
+                price: "£250"
+              }, {
+                name: "The Dandy chair",
+                price: "£250"
+              }
             ].map((product, index) => (
               <div key={index}>
                 <div className="relative aspect-[4/3] mb-4">
@@ -134,13 +181,20 @@ export default function Home() {
         <div className="container mx-auto px-4 text-center">
           <h2 className="text-2xl mb-4">Join the club and get the benefits</h2>
           <p className="text-gray-600 mb-8">
-            Sign up for our newsletter and receive exclusive offers on new ranges, sales, pop up stores and more
+            Sign up for our newsletter and receive exclusive offers on new ranges, sales, pop up stores, and more
           </p>
-          <form className="max-w-md mx-auto flex gap-4">
-            <Input type="email" placeholder="your@email.com" className="flex-1" />
-            <Button type="submit" className="bg-[#2A254B] hover:bg-[#2A254B]/90">
+          <form className="max-w-md mx-auto flex gap-4" onSubmit={handleSubmit}>
+            <input
+              type="email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              placeholder="your@email.com"
+              className="flex-1 p-2 border border-gray-300 rounded-md"
+              required
+            />
+            <button type="submit" className="bg-[#2A254B] hover:bg-[#2A254B]/90 text-white py-2 px-4 rounded-md">
               Sign up
-            </Button>
+            </button>
           </form>
         </div>
       </section>
@@ -173,3 +227,4 @@ export default function Home() {
   )
 }
 
+export default Home
