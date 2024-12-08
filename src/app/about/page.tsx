@@ -1,7 +1,7 @@
 import Image from "next/image"
 import Link from "next/link"
 import { Button } from "../../components/ui/button"
-import { Input } from"../../components/ui/input"
+import { Input } from "../../components/ui/input"
 
 export default function AboutPage() {
   return (
@@ -87,8 +87,7 @@ export default function AboutPage() {
         <div className="container px-4 md:px-6">
           <h2 className="text-2xl font-normal text-center mb-12">What makes our brand different</h2>
           <div className="grid md:grid-cols-4 gap-8">
-            {[
-              {
+            {[{
                 title: "Next day as standard",
                 description: "Order before 3pm and get your order the next day as standard"
               },
@@ -136,4 +135,3 @@ export default function AboutPage() {
     </div>
   )
 }
-
